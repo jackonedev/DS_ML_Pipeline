@@ -20,5 +20,5 @@ def data_info(data: pd.DataFrame, sort=False) -> pd.DataFrame:
     df = df.reset_index(drop=False)
     if sort:
         df = df.sort_values(by=["dtype", "count_unique"])
-    # df = df.reset_index(drop=True)
+        df = df.reset_index(drop=True)
     return df
