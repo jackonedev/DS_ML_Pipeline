@@ -7,9 +7,9 @@ install:
 
 format:
 	isort --profile=black . &&\
-	autopep8 --in-place ./*.py tools/*.py utils/*.py &&\
+	autopep8 --in-place ./*.py tools/*.py utils/*.py ds_pipe/*.py &&\
 	black --line-length 88 .
 
 
 lint:
-	pylint --disable=R,C *.py tools/*.py utils/*.py
+	pylint --disable=R,C *.py tools/*.py utils/*.py ds_pipe/*.py
