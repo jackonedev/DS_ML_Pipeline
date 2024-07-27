@@ -132,3 +132,4 @@ dmypy.json
 ## CARPETA DE DATOS
 datasets/*
 features/*
+*ignore_*
