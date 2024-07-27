@@ -1,8 +1,3 @@
-# Agregar AQUI archivos repoless
-
-
-
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -133,3 +128,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+## CARPETA DE DATOS
+datasets/*
+features/*
