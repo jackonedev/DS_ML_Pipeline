@@ -11,9 +11,7 @@ import os
 
 import pandas as pd
 
-
 from utils.config import DATASETS_PATH, PARQUET_PATH
-
 
 
 def main_feed():
@@ -36,7 +34,7 @@ def main_feed():
     )
     # FutureWarning: Setting an item of incompatible dtype is deprecated
     df.update(datetime_values_utc)
-    
+
     # Rest of the columns
     non_date_sample = df[df.columns[~df.columns.isin(date_sample.columns)]]
 
