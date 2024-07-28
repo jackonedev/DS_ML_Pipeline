@@ -1,3 +1,6 @@
+import os
+
+from ydata_profiling import ProfileReport
 import pandas as pd
 
 
@@ -22,3 +25,21 @@ def data_info(data: pd.DataFrame, sort=False) -> pd.DataFrame:
         df = df.sort_values(by=["dtype", "count_unique"])
         df = df.reset_index(drop=True)
     return df
+
+
+def automatic_report(df: pd.DataFrame, title: str, download: bool = False) -> dict:
+    # el parametro download es para descargar el reporte en el disco local
+    # el output_file va a ser el df.name, si no existe se asigna un nombre por default
+    # TODO: crear un directory "reports" y configurarlo en utils.config
+    profile = ProfileReport(df, title=title)
+    
+    if download:
+        raise NotImplementedError("Download option is not implemented yet")
+        output_file = df.name if df.name else "report.html"
+        # TODO: terminar de configuar el path de descarga con utils.config
+        output_file = os.path.abspath(output_file)
+        profile.to_file(output_file)
+    
+    # return profile.to_json()
+    return profile
+
