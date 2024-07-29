@@ -16,9 +16,19 @@ def format_date(date_str: str, language: str = "es") -> str:
         >>> format_date('2022-01-01', 'en')
         'Saturday 01 January 2022'
 
-        >>> pd.Series([...]).apply(format_date)
-        pd.Series([...])
+        >>> pd.Series([ <str>, <str>, ... ]).apply(format_date)
+        pd.Series([ <str>, <str>, ... ])
+
+        >>> pd.Series([ <datetime>, <datetime>, ... ]).apply(str(x.date())).apply(format_date)
+        pd.Series([ <str>, <str>, ... ])
     """
-    dt = pendulum.parse(date_str)
+
+    # pylint: disable=W0718
+    try:
+        dt = pendulum.parse(date_str)
+    except Exception:
+        # The code returns a ParseError and is not a built-in exception
+        return date_str
+
     pendulum.set_locale(language)
     return dt.format("dddd DD MMMM YYYY")
