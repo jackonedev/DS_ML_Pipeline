@@ -1,3 +1,6 @@
+from functools import wraps
+
+import pandas as pd
 import pendulum
 
 
@@ -32,3 +35,30 @@ def format_date(date_str: str, language: str = "es") -> str:
 
     pendulum.set_locale(language)
     return dt.format("dddd DD MMMM YYYY")
+
+
+def remove_time(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        return pd.Timedelta(days=result.days)
+
+    return wrapper
+
+
+@remove_time
+def round_timedelta(td: pd.Timedelta) -> pd.Timedelta:
+    """
+    Rounds a timedelta to the nearest hour, splitting the day into 12-hour intervals.
+
+    Parameters:
+        td (pd.Timedelta): The timedelta to round.
+
+    Returns:
+        pd.Timedelta: The rounded timedelta.
+    """
+    total_seconds = td.total_seconds()
+    # Each 12 hours is 12 * 3600 seconds
+    interval = 12 * 3600
+    rounded_seconds = round(total_seconds / interval) * interval
+    return pd.Timedelta(seconds=rounded_seconds)
