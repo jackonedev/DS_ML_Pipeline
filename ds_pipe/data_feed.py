@@ -22,7 +22,7 @@ def main_feed(csv_name: Union[str, None] = None) -> None:
     Guarda una copia en formato parquet.
 
     Args:
-    fn (Union[str, None]): Nombre del archivo CSV a leer ubicado en /datasets.
+    csv_name (Union[str, None]): Nombre del archivo CSV a leer ubicado en /datasets.
     """
 
     print("  Step 1: Data Feed Started  ".center(88, "."), end="\n\n")
