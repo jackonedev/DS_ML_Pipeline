@@ -107,11 +107,13 @@ def data_preprocessing(parquet_name: Union[str, None] = None) -> None:
     # Ordenar columnas
     # Definicion del orden deseado de las columnas
     # Reindexar el DataFrame con el nuevo orden de columnas
-    order = [
-        col
-        for col in df.columns
-        if col not in ["ass_unlock_at", "activity_date", "activity_unlock_delta"]
-    ] + ["ass_unlock_at", "activity_date", "activity_unlock_delta"]
+    selected_cols = [
+        "ass_unlock_at",
+        "activity_date",
+        "activity_unlock_delta",
+        "nota_final_materia",
+    ]
+    order = [col for col in df.columns if col not in selected_cols] + selected_cols
     df = df.reindex(columns=order)
 
     # Eliminar filtrados duplicados luego de la imputacion
