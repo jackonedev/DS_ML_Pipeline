@@ -9,8 +9,7 @@ Ejecuta el proceso de labelización de columnas categóricas con multiples valor
 Realiza el formateo final del dateset y guarda el dataset limpio en formato parquet en la carpeta datasets/parquet.
 Guarda el diccionario de leyenda en formato JSON en la carpeta datasets/parquet.
 """
-import time
-import threading
+
 import json
 import re
 from typing import Union
@@ -45,11 +44,6 @@ def data_preprocessing(parquet_name: Union[str, None] = None) -> None:
     Args:
     parquet_name (Union[str, None]): Nombre del archivo parquet a leer ubicado en datasets/parquet.
     """
-
-    start = time.time()
-    
-
-
 
     print("  Step 2: Data Preprocessing Started  ".center(88, "."), end="\n\n")
     # .1. Handling edge cases
@@ -213,9 +207,12 @@ def data_preprocessing(parquet_name: Union[str, None] = None) -> None:
             legend[patterns[pattern]] = set(
                 ass_name_type[ass_name_type.str.contains(regex)].tolist()
             )
+
     # Funcion interna: HILO 2
+
     def replace_patterns(patterns, ass_name_type, legend):
         return ass_name_type.replace(patterns, regex=True)
+
     # TODO: OPTIMIZAR EJECUCION
     # PROCESO 1
     # Buscar coincidencias y almacenarlas en el diccionario

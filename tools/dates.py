@@ -74,7 +74,7 @@ def extract_date_features(
     Parameters:
         df (pd.DataFrame): The DataFrame containing the date column.
         col (str): The name of the date column.
-        include_col_name (bool, optional): Whether to include the column name as a prefix in the feature names. 
+        include_col_name (bool, optional): Whether to include the column name as a prefix in the feature names.
                                             Defaults to True.
 
     Returns:
