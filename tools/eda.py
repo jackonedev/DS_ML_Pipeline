@@ -43,3 +43,47 @@ def automatic_report(df: pd.DataFrame, title: str, download: bool = False) -> di
 
     # return profile.to_json()
     return profile
+
+
+def categorize_columns(X: pd.DataFrame, cat_id_threshold: int) -> dict:
+    """
+    Categorize columns in a DataFrame into binary, categorical, numerical, id and rest columns.
+
+    Args:
+    X (pd.DataFrame): DataFrame to categorize columns.
+    cat_id_threshold (int): the number of unique values a column must have to be considered as an id.
+
+    Returns:
+    dict: Dictionary with keys as column categories and values as column names.
+    """
+    numerical_columns = X.select_dtypes(include="number").columns
+
+    numerical_columns = X.select_dtypes(include="number").columns
+    # TODO: Si es TimeDelta corresponde convertirlo a type int
+
+    categories_count = (
+        X.loc[:, (X.dtypes == "object").values]
+        .apply(lambda x: x.to_frame().drop_duplicates().value_counts(), axis=0)
+        .sum()
+    )
+
+    binary_columns = categories_count[categories_count == 2].index.to_list()
+    categorical_columns = categories_count[
+        (2 < categories_count) & (categories_count < cat_id_threshold)
+    ].index.to_list()
+    id_columns = categories_count[
+        (cat_id_threshold <= categories_count)
+    ].index.to_list()
+    # TODO: datetime_columns = Error de implementacion en la detección del datetime
+
+    rest_columns = X.columns.difference(binary_columns + categorical_columns)
+    rest_columns = rest_columns[~rest_columns.isin(numerical_columns)]
+    rest_columns = rest_columns[~rest_columns.isin(id_columns)]
+
+    return {
+        "id_columns": id_columns,
+        "binary_columns": binary_columns,
+        "categorical_columns": categorical_columns,
+        "numerical_columns": numerical_columns,
+        "rest_columns": rest_columns,
+    }
