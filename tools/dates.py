@@ -1,5 +1,6 @@
 from functools import wraps
 
+import numpy as np
 import pandas as pd
 import pendulum
 
@@ -62,3 +63,32 @@ def round_timedelta(td: pd.Timedelta) -> pd.Timedelta:
     interval = 12 * 3600
     rounded_seconds = round(total_seconds / interval) * interval
     return pd.Timedelta(seconds=rounded_seconds)
+
+
+def extract_date_features(
+    df: pd.DataFrame, col: str, include_col_name: bool = True
+) -> pd.DataFrame:
+    """
+    Extracts various date features from a specified column in a DataFrame.
+
+    Parameters:
+        df (pd.DataFrame): The DataFrame containing the date column.
+        col (str): The name of the date column.
+        include_col_name (bool, optional): Whether to include the column name as a prefix in the feature names. 
+                                            Defaults to True.
+
+    Returns:
+        pd.DataFrame: A DataFrame containing the extracted date features.
+    """
+    col_name = f"{col}_" if include_col_name else ""
+    result = pd.DataFrame()
+    result[f"{col_name}year"] = df[col].dt.year
+    result[f"{col_name}month"] = df[col].dt.month
+    result[f"{col_name}day"] = df[col].dt.day
+    result[f"{col_name}hour"] = df[col].dt.hour
+    result[f"{col_name}dayofweek"] = df[col].dt.dayofweek
+    result[f"{col_name}month_sin"] = np.sin(2 * np.pi * df[col].dt.month / 12)
+    result[f"{col_name}month_cos"] = np.cos(2 * np.pi * df[col].dt.month / 12)
+    result[f"{col_name}day_sin"] = np.sin(2 * np.pi * df[col].dt.day / 31)
+    result[f"{col_name}day_cos"] = np.cos(2 * np.pi * df[col].dt.day / 31)
+    return result
