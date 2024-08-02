@@ -1,10 +1,12 @@
 #!/usr/bin/env python
+import multiprocessing as mp
 import time
 
 import pendulum
 
 from ds_pipe.data_feed import main_feed
 from ds_pipe.data_preprocessing import data_preprocessing
+from ds_pipe.data_preprocessing_mp import data_preprocessing_mp
 from ds_pipe.data_research import main_research
 from ds_pipe.data_results import main_results
 
@@ -12,11 +14,27 @@ from ds_pipe.data_results import main_results
 def main():
     start = time.time()
     file_name = "challenge_edMachina"
+
+    # STEP 1
     main_feed(f"{file_name}.csv")
-    # TODO: descargar un reporte de los datos
-    data_preprocessing(f"{file_name}.parquet")
+
+    # STEP 2
+    try:
+        data_preprocessing_mp(f"{file_name}.parquet")
+    except Exception as e:
+        print(
+            "Multiprocessing execution failed - Falló la ejecución en procesos paralelos."
+        )
+        print("Error:", e, end="\n\n")
+        data_preprocessing(f"{file_name}.parquet")
+
+    # STEP 3: Not Implemented
     main_research()
+
+    # STEP 4
     main_results(f"{file_name}_cleaned.parquet")
+
+    # Execution Time
     current_time = (
         pendulum.now().set(microsecond=0, second=0).format("dddd, MMMM Do YYYY, h:mm A")
     )
@@ -27,4 +45,5 @@ def main():
 
 
 if __name__ == "__main__":
+    mp.freeze_support()
     main()
