@@ -44,7 +44,6 @@ def data_preprocessing(parquet_name: Union[str, None] = None) -> None:
     Args:
     parquet_name (Union[str, None]): Nombre del archivo parquet a leer ubicado en datasets/parquet.
     """
-
     print("  Step 2: Data Preprocessing Started  ".center(88, "."), end="\n\n")
     # .1. Handling edge cases
     if parquet_name is None:
@@ -198,33 +197,15 @@ def data_preprocessing(parquet_name: Union[str, None] = None) -> None:
         r"(?i).+\[ta3\]\s*": "[TA3]",
     }
 
-    # TODO: OPTIMIZAR EJECUCION
     # Buscar coincidencias y almacenarlas en el diccionario
-    # Funcion interna: HILO 1
-    def update_legend(patterns, ass_name_type, legend):
-        for pattern in patterns:
-            regex = re.compile(pattern)
-            legend[patterns[pattern]] = set(
-                ass_name_type[ass_name_type.str.contains(regex)].tolist()
-            )
-
-    # Funcion interna: HILO 2
-
-    def replace_patterns(patterns, ass_name_type, legend):
-        return ass_name_type.replace(patterns, regex=True)
-
-    # TODO: OPTIMIZAR EJECUCION
-    # PROCESO 1
-    # Buscar coincidencias y almacenarlas en el diccionario
+    #
     for pattern in patterns:
         regex = re.compile(pattern)
         legend[patterns[pattern]] = set(
             ass_name_type[ass_name_type.str.contains(regex)].tolist()
         )
-    # PROCESO 2
+    #
     ass_name_label = ass_name_type.replace(patterns, regex=True)
-
-    # CONTINUE
     # pylint: disable=unused-variable
     ass_name_other_mask = ass_name_label.isin(
         (
@@ -237,6 +218,7 @@ def data_preprocessing(parquet_name: Union[str, None] = None) -> None:
             ].index
         )
     )
+    #
     ass_name_label[ass_name_other_mask] = "[OTHER]"
     legend.update({"[OTHER]": set(other_ass_name)})
     ass_name_rest_value_counts_mask = ~pd.Series(
