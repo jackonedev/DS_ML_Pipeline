@@ -14,11 +14,12 @@ from sklearn.feature_selection import (
     r_regression,
 )
 from sklearn.linear_model import ElasticNet, Lasso, LinearRegression, LogisticRegression
-from sklearn.model_selection import StratifiedKFold, train_test_split
+from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 
+from tools.ml import load_data, preprocess_data
 from tools.serializers import custom_serializer
-from utils.config import ARTIFACTS_PATH, FEATURES_PATH
+from utils.config import ARTIFACTS_PATH
 
 RANDOM_STATE = 42
 TEST_SIZE = 0.15
@@ -26,30 +27,6 @@ SCALER = StandardScaler
 SCORE_FUNC = mutual_info_regression
 CV = 5
 NOW = str(int(time.time()))
-
-
-def load_data(dataset_name, feature_name):
-    if feature_name is None:
-        raise ValueError("No file name provided")
-    if not feature_name.endswith(".parquet"):
-        feature_name += ".parquet"
-    df = pd.read_parquet(os.path.join(FEATURES_PATH, dataset_name, feature_name))
-    return df
-
-
-def preprocess_data(df):
-    X = df.drop("target", axis=1)
-    y = df["target"]
-
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE
-    )
-
-    scaler = SCALER()
-    X_train_scaled = scaler.fit_transform(X_train)
-    X_test_scaled = scaler.transform(X_test)
-
-    return X_train_scaled, X_test_scaled, y_train, y_test
 
 
 def feature_selection(X_train, y_train, k=10):
@@ -77,7 +54,9 @@ def main_feature_selector(dataset_name: str, feature_name: str) -> None:
 
     # .2. Cargar feature y procesarla
     df = load_data(dataset_name, feature_name)
-    X_train, X_test, y_train, y_test = preprocess_data(df)
+    X_train, X_test, y_train, y_test = preprocess_data(
+        df, TEST_SIZE, RANDOM_STATE, SCALER
+    )
     df = df.iloc[:, :-1]
 
     # .3. Recursive Feature Elimination with correlated features
