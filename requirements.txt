@@ -14,3 +14,4 @@ ydata-profiling==4.9.0
 ipywidgets==8.1.3
 mlflow==1.26.1
 gdown==5.2.0
+python-dotenv==1.0.1
