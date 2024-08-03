@@ -5,6 +5,7 @@ El step final del pipeline es Feature Engineering.
 Se encarga de la creación de nuevas variables a partir de las existentes.
 Almacena las features en el directorio de features.
 """
+
 # TODO: {dataset_name}_features.parquet no está completado - debe poder ser procesado por main_ml.py
 # TODO: clases desbalanceadas
 

@@ -6,6 +6,7 @@ import pendulum
 
 from ml_pipe.ml_model_1_feature_selector import main_feature_selector
 from ml_pipe.ml_model_2_random_forest import main_random_forest
+from ml_pipe.ml_model_3_cross_validation import main_cross_validation
 
 warnings.filterwarnings("ignore")
 
@@ -14,7 +15,7 @@ def main_ml():
     start = time.time()
     dataset_name = "challenge_edMachina"
     feature_name = "grouped_features"
-    # main_feature_selector(dataset_name, feature_name)
+    main_feature_selector(dataset_name, feature_name)
     main_random_forest(dataset_name, feature_name)
 
     # Execution Time
