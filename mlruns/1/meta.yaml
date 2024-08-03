@@ -1,4 +1,0 @@
-artifact_location: file:///home/afstigliano/challenge_edmachina/mlruns/1
-experiment_id: '1'
-lifecycle_stage: active
-name: 'Feature Selection: "challenge_edMachina_grouped_features"'

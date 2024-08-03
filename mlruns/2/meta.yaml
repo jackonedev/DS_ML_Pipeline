@@ -1,4 +1,0 @@
-artifact_location: file:///home/afstigliano/challenge_edmachina/mlruns/2
-experiment_id: '2'
-lifecycle_stage: active
-name: 'Random Forest: "challenge_edMachina_grouped_features"'
