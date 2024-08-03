@@ -5,6 +5,8 @@ El step final del pipeline es Feature Engineering.
 Se encarga de la creación de nuevas variables a partir de las existentes.
 Almacena las features en el directorio de features.
 """
+# TODO: {dataset_name}_features.parquet no está completado - debe poder ser procesado por main_ml.py
+# TODO: clases desbalanceadas
 
 import os
 import pickle
@@ -142,16 +144,10 @@ def main_results(parquet_name: Union[str, None] = None) -> None:
     )
     selected_init_cols = cols
     selected_final_cols = ["nota_final_materia"]
-    order = (
-        selected_init_cols
-        + [
-            col
-            for col in grouped_features.columns
-            if col not in selected_init_cols + selected_final_cols
-        ]
-        + selected_final_cols
+    grouped_features = change_cols_order(
+        grouped_features, selected_init_cols, selected_final_cols
     )
-    grouped_features = grouped_features.reindex(columns=order)
+    grouped_features = grouped_features.rename(columns={"nota_final_materia": "target"})
     grouped_features = grouped_features.sort_values(cols)
     grouped_features.to_parquet(os.path.join(FEATURES_DIR, file_name))
     print(f"File saved as {file_name}.parquet in {FEATURES_DIR}", end="\n\n")
