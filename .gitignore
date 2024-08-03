@@ -134,3 +134,4 @@ datasets/*
 features/*
 *ignore_*
 mlruns/*
+mlartifacts/*
