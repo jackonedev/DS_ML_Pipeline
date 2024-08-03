@@ -13,6 +13,7 @@ from typing import Union
 import pandas as pd
 
 from utils.config import DATASETS_PATH, PARQUET_PATH
+from utils.download_dataset import download_dataset
 
 
 def main_feed(csv_name: Union[str, None] = None) -> None:
@@ -34,7 +35,13 @@ def main_feed(csv_name: Union[str, None] = None) -> None:
     if not csv_name.endswith(".csv"):
         csv_name += ".csv"
     file_name = os.path.join(DATASETS_PATH, csv_name)
-    df = pd.read_csv(file_name, sep=";")
+    try:
+        df = pd.read_csv(file_name, sep=";")
+    except:
+        download_dataset()
+        df = pd.read_csv(file_name, sep=";")
+    finally:
+        print(f"File {file_name} loaded correctly")
 
     # Convert to datetime the columns with 'at' in the name
     # The 'fecha_mesa_epoch' column also,
