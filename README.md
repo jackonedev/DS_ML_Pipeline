@@ -120,10 +120,13 @@ chmod +x main_ml.py
 ./main_ml.py --model_2=True --model_3=True
 ```
 
-- Example:
+- Example of the execution of the models:
 
-![image](https://user-images.githubusercontent.com/18000553/134785073-3b3b3b3b-1b3b-4b3b-8b3b-3b3b3b3b3b3b.png)
+![models-command](https://github.com/jackonedev/challenge_edmachina/blob/main/.gif/ml_models-ok.gif?raw=true)
 
+- Example of the help command:
+
+![models-command](https://github.com/jackonedev/challenge_edmachina/blob/main/.gif/ml_help-2-ok.gif?raw=true)
 
 #### .7.     **HOW TO ACCESS MLflow UI**
 
