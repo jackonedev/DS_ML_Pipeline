@@ -1,10 +1,7 @@
-import ast
 import os
 import time
-from typing import List
 
 import mlflow
-import pandas as pd
 from mlflow import log_metric, log_param
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import StandardScaler
@@ -26,15 +23,13 @@ HYPERPARAMETERS = {
 
 
 def main_random_forest(dataset_name: str, feature_name: str) -> None:
-    print("main_random_forest")
+    print("  ML model_2: Random Forest Started!  ".center(88, "."), end="\n\n")
 
     # .1. Inicia un nuevo experimento
     feature_name = f"{dataset_name}_{feature_name}"
     experiment_name = f'Random Forest: "{feature_name}"'
     model_registry_name = f"sk-learn-{MODEL.__name__}-model".lower()
     model_artifact_path = os.path.join(ARTIFACTS_PATH, model_registry_name, NOW)
-    if not os.path.exists(model_artifact_path):
-        os.makedirs(model_artifact_path)
     mlflow.set_experiment(experiment_name)
 
     # .2. Cargar feature-dataset y feature-variables
@@ -63,10 +58,5 @@ def main_random_forest(dataset_name: str, feature_name: str) -> None:
         # .6. Registrar el modelo
         mlflow.sklearn.log_model(model, f"{model_registry_name}/{NOW}")
         log_param("features_selected", features)
-
-
-if __name__ == "__main__":
-    dataset_name = "challenge_edMachina"
-    feature_name = "grouped_features"
-    main_random_forest(dataset_name, feature_name)
-    print("done!")
+    
+    print("  ML model_2: Random Forest Done!  ".center(88, "."), end="\n\n")

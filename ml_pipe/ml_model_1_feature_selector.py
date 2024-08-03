@@ -42,14 +42,24 @@ def train_model(X_train, y_train):
 
 
 def main_feature_selector(dataset_name: str, feature_name: str) -> None:
+    """
+    Main function for performing feature selection using Recursive Feature Elimination (RFE) with correlated features and
+    Lasso coefficients.
+    The model will provide metrics from several linear regression models.
 
+    Args:
+        dataset_name (str): The name of the dataset.
+        feature_name (str): The name of the feature.
+
+    Returns:
+        None
+    """
+    print("  ML model_1: Feature Selector Started!  ".center(88, "."), end="\n\n")
     # .1. Inicia un nuevo experimento
     feature_name = f"{dataset_name}_{feature_name}"
     experiment_name = f'Feature Selection: "{feature_name}"'
     model_registry_name = "sk-learn-lasso-feature-selector-model"
     model_artifact_path = os.path.join(ARTIFACTS_PATH, model_registry_name, NOW)
-    if not os.path.exists(model_artifact_path):
-        os.makedirs(model_artifact_path)
     mlflow.set_experiment(experiment_name)
 
     # .2. Cargar feature y procesarla
@@ -131,7 +141,8 @@ def main_feature_selector(dataset_name: str, feature_name: str) -> None:
                 "test_score": test_score_lasso,
                 "features_coef": features_coef,
             }
-
+            if not os.path.exists(model_artifact_path):
+                os.makedirs(model_artifact_path)
             with open(os.path.join(model_artifact_path, f"k_{k}.json"), "w") as f:
                 json.dump(results, f, default=custom_serializer)
 
@@ -151,4 +162,4 @@ def main_feature_selector(dataset_name: str, feature_name: str) -> None:
             # mlflow.sklearn.log_model(model, "model")
 
     log_artifacts(model_artifact_path)
-    print(f"Done!")
+    print("  ML model_1: Feature Selector Done!  ".center(88, "."), end="\n\n")

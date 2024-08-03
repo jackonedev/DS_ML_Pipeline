@@ -28,15 +28,13 @@ HYPERPARAMETERS = {
 
 
 def main_cross_validation(dataset_name: str, feature_name: str) -> None:
-    print("main cross-validation")
+    print("  ML model_3: Cross Validation Started!  ".center(88, "."), end="\n\n")
 
     # .1. Inicia un nuevo experimento
     feature_name = f"{dataset_name}_{feature_name}"
     experiment_name = f'Cross-Validation: "{feature_name}"'
     model_registry_name = f"cross_val-{MODEL.__name__}-model".lower()
     model_artifact_path = os.path.join(ARTIFACTS_PATH, model_registry_name, NOW)
-    if not os.path.exists(model_artifact_path):
-        os.makedirs(model_artifact_path)
     mlflow.set_experiment(experiment_name)
 
     # .2. Cargar feature-dataset y feature-variables
@@ -71,9 +69,4 @@ def main_cross_validation(dataset_name: str, feature_name: str) -> None:
         # .7. Registrar el modelo
         mlflow.sklearn.log_model(model, f"{model_registry_name}/{NOW}")
 
-
-if __name__ == "__main__":
-    dataset_name = "challenge_edMachina"
-    feature_name = "grouped_features"
-    main_cross_validation(dataset_name, feature_name)
-    print("done!")
+    print("  ML model_3: Cross Validation Done!  ".center(88, "."), end="\n\n")
