@@ -1,4 +1,5 @@
 import os
+from typing import Dict, List, Tuple
 
 import pandas as pd
 from ydata_profiling import ProfileReport
@@ -87,3 +88,25 @@ def categorize_columns(X: pd.DataFrame, cat_id_threshold: int) -> dict:
         "numerical_columns": numerical_columns,
         "rest_columns": rest_columns,
     }
+
+
+def change_cols_order(
+    df: pd.DataFrame, init_cols: List[str], final_cols: List[str]
+) -> pd.DataFrame:
+    """
+    Reorders the columns of a DataFrame based on the given initial and final column lists.
+    Args:
+        df (pd.DataFrame): The DataFrame to be reordered.
+        init_cols (List[str]): The list of initial columns.
+        final_cols (List[str]): The list of final columns.
+    Returns:
+        pd.DataFrame: The reordered DataFrame.
+    """
+    assert all(col in df.columns for col in init_cols + final_cols), "Column not found"
+
+    order = (
+        init_cols
+        + [col for col in df.columns if col not in init_cols + final_cols]
+        + final_cols
+    )
+    return df.reindex(columns=order)
