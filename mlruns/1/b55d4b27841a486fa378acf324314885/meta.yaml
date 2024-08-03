@@ -1,0 +1,15 @@
+artifact_uri: file:///home/afstigliano/challenge_edmachina/mlruns/1/b55d4b27841a486fa378acf324314885/artifacts
+end_time: 1722707613312
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+name: ''
+run_id: b55d4b27841a486fa378acf324314885
+run_uuid: b55d4b27841a486fa378acf324314885
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1722707612842
+status: 3
+tags: []
+user_id: afstigliano
