@@ -14,6 +14,7 @@ import numpy as np
 import pandas as pd
 
 from tools.dates import extract_date_features
+from tools.eda import change_cols_order
 from tools.sklearn_custom_estimators import CustomOneHotEncoder, CustomOrdinalEncoder
 from utils.config import FEATURES_PATH, PARQUET_PATH
 
@@ -104,10 +105,9 @@ def main_results(parquet_name: Union[str, None] = None) -> None:
 
     # .9. Grouped Feature 'submission_type'
     # aumentar el peso de los 'nombre_exam' x2
-    nombre_examen_weight = 2
     feature_submission_one_hot["submission_type_nombre_examen"] = (
         feature_submission_one_hot["submission_type_nombre_examen"]
-        * nombre_examen_weight
+        * (nombre_examen_weight := 2)
     )
     grouped_data = pd.concat([df[cols], feature_submission_one_hot], axis=1)
     feature_submission_grouped = (
@@ -122,16 +122,13 @@ def main_results(parquet_name: Union[str, None] = None) -> None:
     )
     selected_init_cols = []
     selected_final_cols = ["nota_final_materia"]
-    order = (
-        selected_init_cols
-        + [
-            col
-            for col in ensamble_features.columns
-            if col not in selected_init_cols + selected_final_cols
-        ]
-        + selected_final_cols
+
+    ensamble_features = change_cols_order(
+        ensamble_features, selected_init_cols, selected_final_cols
     )
-    ensamble_features = ensamble_features.reindex(columns=order)
+    ensamble_features = ensamble_features.rename(
+        columns={"nota_final_materia": "target"}
+    )
     ensamble_features = ensamble_features.sort_values(cols)
     ensamble_features = ensamble_features.reset_index(drop=True)
     ensamble_features.to_parquet(os.path.join(FEATURES_DIR, file_name))
