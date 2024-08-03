@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import multiprocessing as mp
 import time
+import warnings
 
 import pendulum
 
@@ -10,8 +11,10 @@ from ds_pipe.data_preprocessing_mp import data_preprocessing_mp
 from ds_pipe.data_research import main_research
 from ds_pipe.data_results import main_results
 
+warnings.filterwarnings("ignore")
 
-def main():
+
+def main_ds():
     start = time.time()
     file_name = "challenge_edMachina"
 
@@ -46,4 +49,4 @@ def main():
 
 if __name__ == "__main__":
     mp.freeze_support()
-    main()
+    main_ds()
