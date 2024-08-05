@@ -17,12 +17,14 @@ import numpy as np
 import pandas as pd
 
 from tools.dates import extract_date_features
-from tools.eda import change_cols_order
+from tools.eda import change_cols_order, automatic_report
 from tools.sklearn_custom_estimators import CustomOneHotEncoder, CustomOrdinalEncoder
-from utils.config import FEATURES_PATH, PARQUET_PATH
+from utils.config import FEATURES_PATH, PARQUET_PATH, REPORTS_PATH
 
 
-def main_results(parquet_name: Union[str, None] = None) -> None:
+def main_results(
+    parquet_name: Union[str, None] = None, download_reports: bool = True
+) -> None:
     """
     Process the data and generate various features and files.
     Steps:
@@ -136,6 +138,12 @@ def main_results(parquet_name: Union[str, None] = None) -> None:
     ensamble_features = ensamble_features.reset_index(drop=True)
     ensamble_features.to_parquet(os.path.join(FEATURES_DIR, file_name))
     print(f"File saved as {file_name} in {FEATURES_DIR}", end="\n\n")
+    if download_reports:
+        ensamble_features.name = file_name.split(".")[0]
+        print("Generating report:")
+        automatic_report(ensamble_features, title=ensamble_features.name, download=True)
+        print(f"Report saved as {ensamble_features.name} in {REPORTS_PATH}", end="\n\n")
+    
 
     # .11. Ensamble grouped features and download
     file_name = f"{base_name}_grouped_features.parquet"
@@ -152,6 +160,11 @@ def main_results(parquet_name: Union[str, None] = None) -> None:
     grouped_features = grouped_features.sort_values(cols)
     grouped_features.to_parquet(os.path.join(FEATURES_DIR, file_name))
     print(f"File saved as {file_name} in {FEATURES_DIR}", end="\n\n")
+    if download_reports:
+        grouped_features.name = file_name.split(".")[0]
+        print("Generating report:")
+        automatic_report(grouped_features, title=grouped_features.name, download=True)
+        print(f"Report saved as {grouped_features.name} in {REPORTS_PATH}", end="\n\n")
 
     # .12. Descarga de los encoders
     enc_label = [
