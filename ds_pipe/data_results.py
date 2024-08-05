@@ -112,7 +112,7 @@ def main_results(
     # aumentar el peso de los 'nombre_exam' x2
     feature_submission_one_hot["submission_type_nombre_examen"] = (
         feature_submission_one_hot["submission_type_nombre_examen"]
-        * (nombre_examen_weight := 2)
+        * (nombre_examen_weight := 1)
     )
     grouped_data = pd.concat([df[cols], feature_submission_one_hot], axis=1)
     feature_submission_grouped = (
@@ -136,6 +136,8 @@ def main_results(
     )
     ensamble_features = ensamble_features.sort_values(cols)
     ensamble_features = ensamble_features.reset_index(drop=True)
+    # [NEW] Dropeamos las columnas de 'user_uuid' y 'course_uuid'
+    ensamble_features = ensamble_features.drop(columns=cols)
     ensamble_features.to_parquet(os.path.join(FEATURES_DIR, file_name))
     print(f"File saved as {file_name} in {FEATURES_DIR}", end="\n\n")
     if download_reports:
@@ -157,6 +159,8 @@ def main_results(
     )
     grouped_features = grouped_features.rename(columns={"nota_final_materia": "target"})
     grouped_features = grouped_features.sort_values(cols)
+    # [NEW] Dropeamos las columnas de 'user_uuid' y 'course_uuid'
+    grouped_features = grouped_features.drop(columns=cols)
     grouped_features.to_parquet(os.path.join(FEATURES_DIR, file_name))
     print(f"File saved as {file_name} in {FEATURES_DIR}", end="\n\n")
     if download_reports:
