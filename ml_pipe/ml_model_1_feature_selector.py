@@ -186,7 +186,6 @@ def main_feature_selector(dataset_name: str, feature_name: str) -> None:
             test_score_elastic_net = elastic_net.score(X_test_selected, y_test)
             log_metric("train_score_elastic_net", train_score_elastic_net)
             log_metric("test_score_elastic_net", test_score_elastic_net)
-            # mlflow.sklearn.log_model(model, "model")
-
-    log_artifacts(model_artifact_path)
+            log_artifacts(model_artifact_path)
+    
     print("  ML model_1: Feature Selector Done!  ".center(88, "."), end="\n\n")
