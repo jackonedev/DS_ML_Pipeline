@@ -153,7 +153,7 @@ mlflow ui
 
 <br/><br/>
 
-- The metrics of the models are **random forest** model with the h.
+- The metrics of the models are **random forest** model.
 
 |    | model_type            |   test_r2_score |   train_r2_score |
 |---:|:----------------------|----------------:|-----------------:|
@@ -163,7 +163,7 @@ mlflow ui
 
 <br/><br/>
 
-- The metrics of the models are cross validation models with 'n' folds.
+- The metrics of the models are cross validation models with 5 folds.
 
 |    | model_type             |   mean_cv_r2_score |   std_cv_r2_score |   test_r2_score |   train_r2_score |
 |---:|:-----------------------|-------------------:|------------------:|----------------:|-----------------:|
