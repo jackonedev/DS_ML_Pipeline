@@ -1,21 +1,20 @@
 #!/usr/bin/env python
+import os
 import time
 import warnings
-import os
 
-import pendulum
 import fire
+import pendulum
 
 from ml_pipe.ml_model_1_feature_selector import main_feature_selector
 from ml_pipe.ml_model_2_random_forest import main_random_forest
 from ml_pipe.ml_model_3_cross_validation import main_cross_validation
-
 from utils.config import ARTIFACTS_PATH
 
 warnings.filterwarnings("ignore")
 
 
-def main_ml(model_1 = False, model_2 = False, model_3 = False):
+def main_ml(model_1=False, model_2=False, model_3=False):
     """
     Executes the main machine learning pipeline.
     Args:
@@ -26,15 +25,15 @@ def main_ml(model_1 = False, model_2 = False, model_3 = False):
     start = time.time()
     dataset_name = "challenge_edMachina"
     feature_name = "grouped_features"
-    
+
     # Model 1 execution is mandatory if the artifacts folder is empty
     if not os.listdir(ARTIFACTS_PATH):
         model_1 = True
-    
+
     if not model_1 and not model_2 and not model_3:
         print("Please, select at least one model to execute.")
         return
-    
+
     if model_1:
         main_feature_selector(dataset_name, feature_name)
     if model_2:

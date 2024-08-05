@@ -17,7 +17,7 @@ import numpy as np
 import pandas as pd
 
 from tools.dates import extract_date_features
-from tools.eda import change_cols_order, automatic_report
+from tools.eda import automatic_report, change_cols_order
 from tools.sklearn_custom_estimators import CustomOneHotEncoder, CustomOrdinalEncoder
 from utils.config import FEATURES_PATH, PARQUET_PATH, REPORTS_PATH
 
@@ -143,7 +143,6 @@ def main_results(
         print("Generating report:")
         automatic_report(ensamble_features, title=ensamble_features.name, download=True)
         print(f"Report saved as {ensamble_features.name} in {REPORTS_PATH}", end="\n\n")
-    
 
     # .11. Ensamble grouped features and download
     file_name = f"{base_name}_grouped_features.parquet"

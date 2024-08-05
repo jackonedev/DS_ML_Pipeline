@@ -58,5 +58,5 @@ def main_random_forest(dataset_name: str, feature_name: str) -> None:
         # .6. Registrar el modelo
         mlflow.sklearn.log_model(model, f"{model_registry_name}/{NOW}")
         log_param("features_selected", features)
-    
+
     print("  ML model_2: Random Forest Done!  ".center(88, "."), end="\n\n")

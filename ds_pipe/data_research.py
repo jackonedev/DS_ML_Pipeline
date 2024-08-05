@@ -11,27 +11,33 @@ La ejecución de este step:
     
 El objetivo es crear el material para utilizar luego en jupyter notebook.
 """
+
 import os
 from typing import Union
 
 import pandas as pd
-# pd.options.plotting.backend = "plotly"
 
 from tools.eda import automatic_report
 from utils.config import PARQUET_PATH, REPORTS_PATH
 
+# pd.options.plotting.backend = "plotly"
 
-def main_research(parquet_name: Union[str, None] = None, download_reports: bool = True) -> None:
+
+def main_research(
+    parquet_name: Union[str, None] = None, download_reports: bool = True
+) -> None:
 
     print("  Step 3: Data Research Started  ".center(88, "."), end="\n\n")
-    
+
     if parquet_name.endswith(".parquet"):
         parquet_name = parquet_name[:-8]
     if parquet_name.endswith("_cleaned"):
         parquet_name = parquet_name[:-8]
-        
+
     df_raw = pd.read_parquet(os.path.join(PARQUET_PATH, parquet_name + ".parquet"))
-    df_cleaned = pd.read_parquet(os.path.join(PARQUET_PATH, parquet_name + "_cleaned.parquet"))
+    df_cleaned = pd.read_parquet(
+        os.path.join(PARQUET_PATH, parquet_name + "_cleaned.parquet")
+    )
     df_raw.name = parquet_name
     df_cleaned.name = parquet_name + "_cleaned"
 
@@ -43,22 +49,11 @@ def main_research(parquet_name: Union[str, None] = None, download_reports: bool 
         print("Generating report:")
         automatic_report(df_cleaned, title=df_cleaned.name, download=True)
         print(f"Report saved as {df_cleaned.name} in {REPORTS_PATH}", end="\n\n")
-    
+
     # Analisis de desbalance de las clases
-    
+
     # Generar samples de los datos para balancear las clases
-    
+
     # descargar samples en formato parquet en el directorio de Samples
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     print("  Step 3: Data Research Completed  ".center(88, "."), end="\n\n")
