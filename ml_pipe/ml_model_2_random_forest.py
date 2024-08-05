@@ -47,13 +47,13 @@ def main_random_forest(dataset_name: str, feature_name: str) -> None:
         log_param("model_type", MODEL.__name__)
         model = train_model(X_train, y_train, MODEL, **HYPERPARAMETERS)
         predictions = model.predict(X_test)
-        accuracy = model.score(X_test, y_test)
+        test_r2_score = model.score(X_test, y_test)
 
         # .5. Registrar las características y resultados
         log_param("features", features)
         log_param("hyperparameters", HYPERPARAMETERS)
-        log_metric("train_accuracy", model.score(X_train, y_train))
-        log_metric("test_accuracy", accuracy)
+        log_metric("train_r2_score", model.score(X_train, y_train))
+        log_metric("test_r2_score", test_r2_score)
 
         # .6. Registrar el modelo
         mlflow.sklearn.log_model(model, f"{model_registry_name}/{NOW}")
