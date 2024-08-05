@@ -134,3 +134,39 @@ chmod +x main_ml.py
 ```bash
 mlflow ui
 ```
+
+#### .8.     **METRICS**
+
+- The metrics of the models are **linear models** with 'k' features using SelectKBest. The models are LinearRegression, Lasso, and ElasticNet.
+
+|    |   k |   train_score_elastic_net |   train_score_lasso |   train_score_lin_reg |   test_score_elastic_net |   test_score_lasso |   test_score_lin_reg |
+|---:|----:|--------------------------:|--------------------:|----------------------:|-------------------------:|-------------------:|---------------------:|
+|  0 |  34 |                    0.2296 |              0.2846 |                0.296  |                   0.244  |             0.2905 |               0.2959 |
+|  1 |  29 |                    0.1911 |              0.2207 |                0.2292 |                   0.197  |             0.2212 |               0.2232 |
+|  2 |  25 |                    0.1497 |              0.1527 |                0.1552 |                   0.1746 |             0.1816 |               0.1901 |
+|  3 |  23 |                    0.1375 |              0.139  |                0.1403 |                   0.1655 |             0.1702 |               0.1774 |
+|  4 |  17 |                    0.1251 |              0.1267 |                0.1279 |                   0.1518 |             0.1553 |               0.1617 |
+|  5 |  11 |                    0.0668 |              0.067  |                0.0674 |                   0.0891 |             0.0895 |               0.0934 |
+|  6 |   5 |                    0.0452 |              0.0454 |                0.0455 |                   0.0587 |             0.059  |               0.0608 |
+|  7 |   2 |                    0.0065 |              0.0065 |                0.0065 |                   0.0115 |             0.0114 |               0.012  |
+
+
+<br/><br/>
+
+- The metrics of the models are **random forest** model with the h.
+
+|    | model_type            |   test_r2_score |   train_r2_score |
+|---:|:----------------------|----------------:|-----------------:|
+|  0 | RandomForestRegressor |        0.223173 |         0.701494 |
+
+**Hyperparameters:** {'n_estimators': 100, 'max_depth': 10, 'random_state': 42}
+
+<br/><br/>
+
+- The metrics of the models are cross validation models with 'n' folds.
+
+|    | model_type             |   mean_cv_r2_score |   std_cv_r2_score |   test_r2_score |   train_r2_score |
+|---:|:-----------------------|-------------------:|------------------:|----------------:|-----------------:|
+|  0 | RandomForestClassifier |         -0.0476782 |         0.0786882 |        0.283721 |                1 |
+
+**Hyperparameters:** {'n_estimators': 100, 'max_depth': 10, 'random_state': 42}
