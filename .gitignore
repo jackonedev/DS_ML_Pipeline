@@ -132,6 +132,7 @@ dmypy.json
 ## CARPETA DE DATOS
 datasets/*
 features/*
+reports/*
 *ignore_*
 mlruns/*
 mlartifacts/*
