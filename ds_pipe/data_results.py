@@ -135,7 +135,7 @@ def main_results(parquet_name: Union[str, None] = None) -> None:
     ensamble_features = ensamble_features.sort_values(cols)
     ensamble_features = ensamble_features.reset_index(drop=True)
     ensamble_features.to_parquet(os.path.join(FEATURES_DIR, file_name))
-    print(f"File saved as {file_name}.parquet in {FEATURES_DIR}", end="\n\n")
+    print(f"File saved as {file_name} in {FEATURES_DIR}", end="\n\n")
 
     # .11. Ensamble grouped features and download
     file_name = f"{base_name}_grouped_features.parquet"
@@ -151,7 +151,7 @@ def main_results(parquet_name: Union[str, None] = None) -> None:
     grouped_features = grouped_features.rename(columns={"nota_final_materia": "target"})
     grouped_features = grouped_features.sort_values(cols)
     grouped_features.to_parquet(os.path.join(FEATURES_DIR, file_name))
-    print(f"File saved as {file_name}.parquet in {FEATURES_DIR}", end="\n\n")
+    print(f"File saved as {file_name} in {FEATURES_DIR}", end="\n\n")
 
     # .12. Descarga de los encoders
     enc_label = [
@@ -172,6 +172,6 @@ def main_results(parquet_name: Union[str, None] = None) -> None:
         file_name = f"{base_name}_{label}.pkl"
         with open(os.path.join(FEATURES_DIR, file_name), "wb") as fp:
             pickle.dump(obj, fp)
-        print(f"File saved as {file_name}.parquet in {FEATURES_DIR}", end="\n\n")
+        print(f"File saved as {file_name} in {FEATURES_DIR}", end="\n\n")
 
     print("  Step 4: Data Results Completed  ".center(88, "."), end="\n\n")
