@@ -4,7 +4,7 @@ import time
 import mlflow
 from mlflow import log_metric, log_param
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, make_scorer
+from sklearn.metrics import make_scorer, r2_score
 from sklearn.model_selection import KFold, cross_val_score
 from sklearn.preprocessing import StandardScaler
 
@@ -53,14 +53,14 @@ def main_cross_validation(dataset_name: str, feature_name: str) -> None:
         # .5. Realizar validación cruzada
         cv = KFold(n_splits=CV, shuffle=True, random_state=RANDOM_STATE)
         cv_scores = cross_val_score(
-            model, X_train, y_train, cv=cv, scoring=make_scorer(accuracy_score)
+            model, X_train, y_train, cv=cv, scoring=make_scorer(r2_score)
         )
 
         # .6. Registrar métricas y parámetros
-        log_metric("mean_cv_accuracy", cv_scores.mean())
-        log_metric("std_cv_accuracy", cv_scores.std())
-        log_metric("test_accuracy", model.score(X_test, y_test))
-        log_metric("train_accuracy", model.score(X_train, y_train))
+        log_metric("mean_cv_r2_score", cv_scores.mean())
+        log_metric("std_cv_r2_score", cv_scores.std())
+        log_metric("test_r2_score", model.score(X_test, y_test))
+        log_metric("train_r2_score", model.score(X_train, y_train))
         log_param("features_selected", features)
         log_param("hyperparameters", HYPERPARAMETERS)
 
