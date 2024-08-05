@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-import multiprocessing as mp
 import time
 import warnings
 
+import fire
 import pendulum
 
 from ds_pipe.data_feed import main_feed
@@ -14,7 +14,7 @@ from ds_pipe.data_results import main_results
 warnings.filterwarnings("ignore")
 
 
-def main_ds():
+def main_ds(download_reports: bool = False) -> None:
     start = time.time()
     file_name = "challenge_edMachina"
 
@@ -33,10 +33,10 @@ def main_ds():
         data_preprocessing(f"{file_name}.parquet")
 
     # STEP 3: Not Implemented
-    main_research(file_name, download_reports=False)
+    main_research(file_name, download_reports=download_reports)
 
     # STEP 4
-    main_results(f"{file_name}_cleaned.parquet", download_reports=False)
+    main_results(f"{file_name}_cleaned.parquet", download_reports=download_reports)
 
     # Execution Time
     current_time = (
@@ -49,5 +49,5 @@ def main_ds():
 
 
 if __name__ == "__main__":
-    mp.freeze_support()
-    main_ds()
+    
+    fire.Fire(main_ds)
