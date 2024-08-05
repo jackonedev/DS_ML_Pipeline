@@ -34,20 +34,25 @@ def automatic_report(df: pd.DataFrame, title: str, download: bool = False) -> di
     """
     Create a ProfileReport object from a DataFrame and save it as an HTML file.
     The name of the file is the name of the DataFrame if it has one, otherwise it is "report.html".
-    
+
     Args:
     df (pd.DataFrame): DataFrame to create the report from.
     title (str): Title of the report.
     download (bool): Whether to save the report as an HTML file or not.
-    
+
     Returns:
     ProfileReport: ProfileReport object.
     """
     profile = ProfileReport(df, title=title)
 
     if download:
-        output_file = df.name if df.name else "report.html"
-        output_file = output_file if output_file.endswith(".html") else f"{output_file}.html"
+        try:
+            output_file = df.name
+            output_file = (
+                output_file if output_file.endswith(".html") else f"{output_file}.html"
+            )
+        except AttributeError:
+            output_file = "report.html"
         output_file = os.path.join(REPORTS_PATH, output_file)
         profile.to_file(output_file)
 
