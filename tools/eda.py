@@ -4,6 +4,8 @@ from typing import Dict, List, Tuple
 import pandas as pd
 from ydata_profiling import ProfileReport
 
+from utils.config import REPORTS_PATH
+
 
 def data_info(data: pd.DataFrame, sort=False) -> pd.DataFrame:
     """
@@ -29,20 +31,26 @@ def data_info(data: pd.DataFrame, sort=False) -> pd.DataFrame:
 
 
 def automatic_report(df: pd.DataFrame, title: str, download: bool = False) -> dict:
-    # el parametro download es para descargar el reporte en el disco local
-    # el output_file va a ser el df.name, si no existe se asigna un nombre por default
-    # TODO: crear un directory "reports" y configurarlo en utils.config
+    """
+    Create a ProfileReport object from a DataFrame and save it as an HTML file.
+    The name of the file is the name of the DataFrame if it has one, otherwise it is "report.html".
+    
+    Args:
+    df (pd.DataFrame): DataFrame to create the report from.
+    title (str): Title of the report.
+    download (bool): Whether to save the report as an HTML file or not.
+    
+    Returns:
+    ProfileReport: ProfileReport object.
+    """
     profile = ProfileReport(df, title=title)
 
-    # pylint: disable=W0101
     if download:
-        raise NotImplementedError("Download option is not implemented yet")
         output_file = df.name if df.name else "report.html"
-        # TODO: terminar de configuar el path de descarga con utils.config
-        output_file = os.path.abspath(output_file)
+        output_file = output_file if output_file.endswith(".html") else f"{output_file}.html"
+        output_file = os.path.join(REPORTS_PATH, output_file)
         profile.to_file(output_file)
 
-    # return profile.to_json()
     return profile
 
 
