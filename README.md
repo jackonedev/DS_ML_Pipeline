@@ -163,10 +163,20 @@ mlflow ui
 
 <br/><br/>
 
-- The metrics of the models are cross validation models with 5 folds.
+- The metrics of the models are **XGBoost** model.
+
+|    | model_type            |   test_r2_score |   train_r2_score |
+|---:|:----------------------|----------------:|-----------------:|
+|  0 | XGBRegressor          |        0.366    |         0.575    |
+
+**Hyperparameters:** {"objective": "reg:squarederror", "n_estimators": 1000, "learning_rate": 0.1, "max_depth": 3, "callbacks": [early_stop]}
+
+<br/><br/>
+
+- The metrics of the models are **cross validation** models with 5 folds.
 
 |    | model_type             |   mean_cv_r2_score |   std_cv_r2_score |   test_r2_score |   train_r2_score |
 |---:|:-----------------------|-------------------:|------------------:|----------------:|-----------------:|
-|  0 | RandomForestClassifier |         -0.0476782 |         0.0786882 |        0.283721 |                1 |
+|  0 | RandomForestClassifier |         -0.03      |         0.055     |        0.258    |                1 |
 
 **Hyperparameters:** {'n_estimators': 100, 'max_depth': 10, 'random_state': 42}
