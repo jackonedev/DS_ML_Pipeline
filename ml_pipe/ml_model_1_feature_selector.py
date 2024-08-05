@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 from mlflow import log_artifacts, log_metric, log_param
 from scipy.signal import argrelextrema
+
 # pylint: disable=unused-import
 from sklearn.feature_selection import (
     RFECV,
@@ -180,12 +181,16 @@ def main_feature_selector(dataset_name: str, feature_name: str) -> None:
             test_score_lin_reg = lin_reg.score(X_test_selected, y_test)
             log_metric("train_score_lin_reg", train_score_lin_reg)
             log_metric("test_score_lin_reg", test_score_lin_reg)
+            print("train_r2_score_lin_reg: ", train_score_lin_reg)
+            print("test_r2_score_lin_reg: ", test_score_lin_reg)
             elastic_net = ElasticNet(alpha=0.1)
             elastic_net.fit(X_train_selected, y_train)
             train_score_elastic_net = elastic_net.score(X_train_selected, y_train)
             test_score_elastic_net = elastic_net.score(X_test_selected, y_test)
             log_metric("train_score_elastic_net", train_score_elastic_net)
             log_metric("test_score_elastic_net", test_score_elastic_net)
+            print("train_r2_score_elastic_net: ", train_score_elastic_net)
+            print("test_r2_score_elastic_net: ", test_score_elastic_net)
             log_artifacts(model_artifact_path)
-    
+
     print("  ML model_1: Feature Selector Done!  ".center(88, "."), end="\n\n")

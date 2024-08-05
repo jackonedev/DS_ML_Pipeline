@@ -49,5 +49,5 @@ def main_ds(download_reports: bool = False) -> None:
 
 
 if __name__ == "__main__":
-    
+
     fire.Fire(main_ds)
