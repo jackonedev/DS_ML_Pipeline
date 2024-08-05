@@ -3,6 +3,7 @@ import os
 import time
 
 import mlflow
+import numpy as np
 import pandas as pd
 from mlflow import log_artifacts, log_metric, log_param
 from scipy.signal import argrelextrema
@@ -14,6 +15,7 @@ from sklearn.feature_selection import (
     r_regression,
 )
 from sklearn.linear_model import ElasticNet, Lasso, LinearRegression, LogisticRegression
+from sklearn.metrics import r2_score
 from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 
@@ -27,6 +29,10 @@ SCALER = StandardScaler
 SCORE_FUNC = mutual_info_regression
 CV = 5
 NOW = str(int(time.time()))
+
+
+def round_custom(value, threshold=0.5):
+    return int(np.ceil(value)) if value - int(value) > threshold else int(value)
 
 
 def feature_selection(X_train, y_train, k=10):
@@ -122,8 +128,22 @@ def main_feature_selector(dataset_name: str, feature_name: str) -> None:
             # 5.2 Entrenar el modelo Lasso y registrar los resultados
             X_test_selected = selector.transform(X_test)
             model = train_model(X_train_selected, y_train)
-            train_score_lasso = model.score(X_train_selected, y_train)
-            test_score_lasso = model.score(X_test_selected, y_test)
+            train_predict_lasso = model.predict(X_train_selected)
+            test_predict_lasso = model.predict(X_test_selected)
+            train_score_lasso = r2_score(y_train, train_predict_lasso)
+            test_score_lasso = r2_score(y_test, test_predict_lasso)
+
+            # Redondear las predicciones y obtener el score R2
+            score_threshold = 0.5
+            train_predict_lasso_rounded = [
+                round_custom(pred, score_threshold) for pred in train_predict_lasso
+            ]
+            test_predict_lasso_rounded = [
+                round_custom(pred, score_threshold) for pred in test_predict_lasso
+            ]
+            train_score_lasso_rounded = r2_score(y_train, train_predict_lasso_rounded)
+            test_score_lasso_rounded = r2_score(y_test, test_predict_lasso_rounded)
+
             features_coef = model.coef_
             log_metric("train_score_lasso", train_score_lasso)
             log_metric("test_score_lasso", test_score_lasso)
@@ -139,6 +159,9 @@ def main_feature_selector(dataset_name: str, feature_name: str) -> None:
                 "score_func_name": score_func_name,
                 "train_score": train_score_lasso,
                 "test_score": test_score_lasso,
+                "score_threshold": score_threshold,
+                "train_score_rounded": train_score_lasso_rounded,
+                "test_score_rounded": test_score_lasso_rounded,
                 "features_coef": features_coef,
             }
             if not os.path.exists(model_artifact_path):
