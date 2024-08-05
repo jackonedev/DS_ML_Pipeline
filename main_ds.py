@@ -32,10 +32,10 @@ def main_ds():
         data_preprocessing(f"{file_name}.parquet")
 
     # STEP 3: Not Implemented
-    main_research()
+    main_research(file_name, download_reports=False)
 
     # STEP 4
-    main_results(f"{file_name}_cleaned.parquet")
+    main_results(f"{file_name}_cleaned.parquet", download_reports=False)
 
     # Execution Time
     current_time = (
