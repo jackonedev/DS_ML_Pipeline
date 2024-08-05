@@ -22,6 +22,7 @@ def main_ds():
     main_feed(f"{file_name}.csv")
 
     # STEP 2
+    # pylint: disable=broad-exception-caught
     try:
         data_preprocessing_mp(f"{file_name}.parquet")
     except Exception as e:

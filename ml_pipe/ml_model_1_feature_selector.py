@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 from mlflow import log_artifacts, log_metric, log_param
 from scipy.signal import argrelextrema
+# pylint: disable=unused-import
 from sklearn.feature_selection import (
     RFECV,
     SelectKBest,
@@ -120,6 +121,7 @@ def main_feature_selector(dataset_name: str, feature_name: str) -> None:
             score_func_name = selector.score_func.__name__
             log_param("features_selected", features_selected)
             log_param("score_func_name", score_func_name)
+            # pylint: disable=expression-not-assigned
             [
                 log_metric(f"score_{ft}", ft_score)
                 for ft, ft_score in zip(features_selected, features_scores)
@@ -147,6 +149,7 @@ def main_feature_selector(dataset_name: str, feature_name: str) -> None:
             features_coef = model.coef_
             log_metric("train_score_lasso", train_score_lasso)
             log_metric("test_score_lasso", test_score_lasso)
+            # pylint: disable=expression-not-assigned
             [
                 log_metric(f"coef_{ft}", ft_coef)
                 for ft, ft_coef in zip(features_selected, features_coef)
@@ -166,6 +169,7 @@ def main_feature_selector(dataset_name: str, feature_name: str) -> None:
             }
             if not os.path.exists(model_artifact_path):
                 os.makedirs(model_artifact_path)
+            # pylint: disable=unspecified-encoding
             with open(os.path.join(model_artifact_path, f"k_{k}.json"), "w") as f:
                 json.dump(results, f, default=custom_serializer)
 

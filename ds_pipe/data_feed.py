@@ -35,6 +35,7 @@ def main_feed(csv_name: Union[str, None] = None) -> None:
     if not csv_name.endswith(".csv"):
         csv_name += ".csv"
     file_name = os.path.join(DATASETS_PATH, csv_name)
+    # pylint: disable=bare-except
     try:
         df = pd.read_csv(file_name, sep=";")
     except:

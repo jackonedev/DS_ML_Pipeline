@@ -1,10 +1,7 @@
-import ast
 import os
 import time
-from typing import List
 
 import mlflow
-import pandas as pd
 from mlflow import log_metric, log_param
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, make_scorer
@@ -34,6 +31,7 @@ def main_cross_validation(dataset_name: str, feature_name: str) -> None:
     feature_name = f"{dataset_name}_{feature_name}"
     experiment_name = f'Cross-Validation: "{feature_name}"'
     model_registry_name = f"cross_val-{MODEL.__name__}-model".lower()
+    # pylint: disable=unused-variable
     model_artifact_path = os.path.join(ARTIFACTS_PATH, model_registry_name, NOW)
     mlflow.set_experiment(experiment_name)
 

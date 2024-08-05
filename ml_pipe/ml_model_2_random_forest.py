@@ -29,6 +29,7 @@ def main_random_forest(dataset_name: str, feature_name: str) -> None:
     feature_name = f"{dataset_name}_{feature_name}"
     experiment_name = f'Random Forest: "{feature_name}"'
     model_registry_name = f"sk-learn-{MODEL.__name__}-model".lower()
+    # pylint: disable=unused-variable
     model_artifact_path = os.path.join(ARTIFACTS_PATH, model_registry_name, NOW)
     mlflow.set_experiment(experiment_name)
 
@@ -46,7 +47,6 @@ def main_random_forest(dataset_name: str, feature_name: str) -> None:
     with mlflow.start_run():
         log_param("model_type", MODEL.__name__)
         model = train_model(X_train, y_train, MODEL, **HYPERPARAMETERS)
-        predictions = model.predict(X_test)
         test_r2_score = model.score(X_test, y_test)
 
         # .5. Registrar las características y resultados
