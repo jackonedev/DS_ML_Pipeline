@@ -39,7 +39,7 @@ The `multiprocessing` library was implemented within the script `tools/optimizer
 │   ├── data_feed.py                        -> Step 1: data feed
 │   ├── data_preprocessing_mp.py            -> Step 2: data preprocessing multiprocessing
 │   ├── data_preprocessing.py               -> Step 2: data preprocessing
-│   ├── data_research.py                    -> Step 3: data research (not implemented)
+│   ├── data_research.py                    -> Step 3: data research
 │   └── data_results.py                     -> Step 4: data results
 ├── env.txt                                 -> environment variables example
 ├── features/                               -> features folder: the output of the data science pipeline
@@ -52,7 +52,8 @@ The `multiprocessing` library was implemented within the script `tools/optimizer
 │   ├── __pycache__/
 │   ├── ml_model_1_feature_selector.py      -> Model 1: feature selector (LinearRegression, Lasso, ElasticNet)
 │   ├── ml_model_2_random_forest.py         -> Model 2: random forest
-│   └── ml_model_3_cross_validation.py      -> Model 3: cross validation
+│   ├── ml_model_3_cross_validation.py      -> Model 3: cross validation
+│   └── ml_model_4_xgboost.py               -> Model 4: xgboost XGBRegressor
 ├── mlartifacts/                            -> machine learning artifacts folder
 │   └── ...
 ├── mlruns/                                 -> mlflow folder
@@ -96,10 +97,22 @@ make install
 cp env.txt .env
 ```
 
-- Run the main script
+- Conceed administrative permissions to the main script (once)
 ```bash
-python main_ds.py
-``` 
+chmod +x main_ml.py
+```
+
+- Run the main script without reports
+```bash
+./main_ds.py
+```
+
+- Run the main script and download reports
+```bash
+./main_ds.py -d=True
+```
+
+
 
 #### .6.     **HOW TO RUN ML MAIN APP**
 
@@ -137,7 +150,7 @@ mlflow ui
 
 #### .8.     **METRICS**
 
-- The metrics of the models are **linear models** with 'k' features using SelectKBest. The models are LinearRegression, Lasso, and ElasticNet.
+- The metrics of the **Linear Regression** models with 'k' features using `sklearn` `SelectKBest`. The models are LinearRegression, Lasso, and ElasticNet.
 
 |    |   k |   train_score_elastic_net |   train_score_lasso |   train_score_lin_reg |   test_score_elastic_net |   test_score_lasso |   test_score_lin_reg |
 |---:|----:|--------------------------:|--------------------:|----------------------:|-------------------------:|-------------------:|---------------------:|
@@ -153,7 +166,7 @@ mlflow ui
 
 <br/><br/>
 
-- The metrics of the models are **random forest** model.
+- The metrics of the **Random Forest** model.
 
 |    | model_type            |   test_r2_score |   train_r2_score |
 |---:|:----------------------|----------------:|-----------------:|
@@ -163,20 +176,20 @@ mlflow ui
 
 <br/><br/>
 
-- The metrics of the models are **XGBoost** model.
-
-|    | model_type            |   test_r2_score |   train_r2_score |
-|---:|:----------------------|----------------:|-----------------:|
-|  0 | XGBRegressor          |        0.366    |         0.575    |
-
-**Hyperparameters:** {"objective": "reg:squarederror", "n_estimators": 1000, "learning_rate": 0.1, "max_depth": 3, "callbacks": [early_stop]}
-
-<br/><br/>
-
-- The metrics of the models are **cross validation** models with 5 folds.
+- The metrics of the models using **cross validation** with 5 folds.
 
 |    | model_type             |   mean_cv_r2_score |   std_cv_r2_score |   test_r2_score |   train_r2_score |
 |---:|:-----------------------|-------------------:|------------------:|----------------:|-----------------:|
 |  0 | RandomForestClassifier |         -0.03      |         0.055     |        0.258    |                1 |
 
 **Hyperparameters:** {'n_estimators': 100, 'max_depth': 10, 'random_state': 42}
+
+<br/><br/>
+
+- The metrics of the **XGBoost** model.
+
+|    | model_type            |   test_r2_score |   train_r2_score |
+|---:|:----------------------|----------------:|-----------------:|
+|  0 | XGBRegressor          |        0.366    |         0.575    |
+
+**Hyperparameters:** {"objective": "reg:squarederror", "n_estimators": 1000, "learning_rate": 0.1, "max_depth": 3, "callbacks": [early_stop]}
