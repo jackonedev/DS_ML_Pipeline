@@ -99,7 +99,7 @@ cp env.txt .env
 
 - Conceed administrative permissions to the main script (once)
 ```bash
-chmod +x main_ml.py
+chmod +x main_ds.py
 ```
 
 - Run the main script without reports
