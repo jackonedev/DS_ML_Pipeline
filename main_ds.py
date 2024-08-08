@@ -10,33 +10,33 @@ from ds_pipe.data_preprocessing import data_preprocessing
 from ds_pipe.data_preprocessing_mp import data_preprocessing_mp
 from ds_pipe.data_research import main_research
 from ds_pipe.data_results import main_results
+from utils.config import DATASET_NAME
 
 warnings.filterwarnings("ignore")
 
 
 def main_ds(download_reports: bool = False) -> None:
     start = time.time()
-    file_name = "challenge_edMachina"
 
     # STEP 1
-    main_feed(f"{file_name}.csv")
+    main_feed(f"{DATASET_NAME}.csv")
 
     # STEP 2
     # pylint: disable=broad-exception-caught
     try:
-        data_preprocessing_mp(f"{file_name}.parquet")
+        data_preprocessing_mp(f"{DATASET_NAME}.parquet")
     except Exception as e:
         print(
             "Multiprocessing execution failed - Falló la ejecución en procesos paralelos."
         )
         print("Error:", e, end="\n\n")
-        data_preprocessing(f"{file_name}.parquet")
+        data_preprocessing(f"{DATASET_NAME}.parquet")
 
     # STEP 3: Not Implemented
-    main_research(file_name, download_reports=download_reports)
+    main_research(DATASET_NAME, download_reports=download_reports)
 
     # STEP 4
-    main_results(f"{file_name}_cleaned.parquet", download_reports=download_reports)
+    main_results(f"{DATASET_NAME}_cleaned.parquet", download_reports=download_reports)
 
     # Execution Time
     current_time = (

@@ -10,7 +10,7 @@ from ml_pipe.ml_model_1_feature_selector import main_feature_selector
 from ml_pipe.ml_model_2_random_forest import main_random_forest
 from ml_pipe.ml_model_3_cross_validation import main_cross_validation
 from ml_pipe.ml_model_4_xgboost import main_xgboost
-from utils.config import ARTIFACTS_PATH
+from utils.config import ARTIFACTS_PATH, DATASET_NAME
 
 warnings.filterwarnings("ignore")
 
@@ -25,7 +25,7 @@ def main_ml(model_1=False, model_2=False, model_3=False, model_4=False):
         model_4 (bool): Flag indicating whether to execute an XGBoostRegressor model.
     """
     start = time.time()
-    dataset_name = "challenge_edMachina"
+    dataset_name = DATASET_NAME
     feature_name = "grouped_features"
 
     # Model 1 execution is mandatory if the artifacts folder is empty
