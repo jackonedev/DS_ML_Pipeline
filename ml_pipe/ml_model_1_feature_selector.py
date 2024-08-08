@@ -28,6 +28,7 @@ from utils.config import ARTIFACTS_PATH
 RANDOM_STATE = 42
 TEST_SIZE = 0.15
 SCALER = StandardScaler
+MIN_K = 1
 SCORE_FUNC = mutual_info_regression
 CV = 5
 NOW = str(int(time.time()))
@@ -85,7 +86,7 @@ def main_feature_selector(dataset_name: str, feature_name: str) -> None:
         step=1,
         cv=cv,
         scoring="accuracy",
-        min_features_to_select=1,
+        min_features_to_select=MIN_K,
         n_jobs=-1,
     )
     rfecv.fit(X_train, y_train)
