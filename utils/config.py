@@ -39,3 +39,7 @@ SAMPLES_PATH = os.path.join(DATASETS_PATH, "samples")
 REPORTS_PATH = os.path.join(PROJECT_ROOT, "reports")
 FEATURES_PATH = os.path.join(PROJECT_ROOT, "features")
 ARTIFACTS_PATH = os.path.join(PROJECT_ROOT, "mlartifacts")
+
+# Makefile: new_attempt
+if not os.path.exists(os.path.join(PROJECT_ROOT, "ds_versions")):
+    os.makedirs(os.path.join(PROJECT_ROOT, "ds_versions"))
