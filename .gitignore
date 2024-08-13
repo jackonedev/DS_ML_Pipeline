@@ -136,3 +136,4 @@ reports/*
 *ignore_*
 mlruns/*
 mlartifacts/*
+ds_versions/*
