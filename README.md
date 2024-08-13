@@ -11,19 +11,8 @@
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1x7SkJnYftjmRSBVv0NIRDZJCcHluDnYW?usp=sharing)
 
-#### .3.     **OPTIMIZATION**
 
-The `multiprocessing` library was implemented within the script `tools/optimizer.py`, creating two functions within the script `data_preprocessing_mp.py` that are executed in parallel within the function called `data_preprocessing_mp`.
-
-- The original step 2 takes 7.7 seconds
-- The optimized step 2 takes 4.99 seconds
-- The original main pipeline takes 10.75 seconds
-- The main pipeline with the optimized step takes 8 seconds
-- The performance improvement in step 2 is 35.2%
-- The performance improvement in the main pipeline is 25.6%
-
-
-#### .4.     **APP DIAGRAM**
+#### .3.     **APP DIAGRAM**
 
 ```
 .
@@ -41,12 +30,13 @@ The `multiprocessing` library was implemented within the script `tools/optimizer
 │   ├── data_preprocessing.py               -> Step 2: data preprocessing
 │   ├── data_research.py                    -> Step 3: data research
 │   └── data_results.py                     -> Step 4: data results
+├── ds_versions/                            -> ds pipeline versions storage
 ├── env.txt                                 -> environment variables example
 ├── features/                               -> features folder: the output of the data science pipeline
 │   └── challenge_edMachina/
 ├── main_ds.py                              -> main data science pipeline script
 ├── main_ml.py                              -> main machine learning pipeline script
-├── Makefile
+├── Makefile                                -> Makefile script
 ├── ml_pipe/                                -> machine learning module
 │   ├── __init__.py
 │   ├── __pycache__/
@@ -83,7 +73,7 @@ The `multiprocessing` library was implemented within the script `tools/optimizer
 ```
 
 
-#### .5.     **HOW TO RUN DS MAIN PIPELINE**
+#### .4.     **HOW TO RUN DS MAIN PIPELINE**
 
 - Create a virtual environment and install the requirements (once)
 ```bash
@@ -114,7 +104,7 @@ chmod +x main_ds.py
 
 
 
-#### .6.     **HOW TO RUN ML MAIN APP**
+#### .5.     **HOW TO RUN ML MAIN APP**
 
 - Conceed administrative permissions to the main script (once)
 ```bash
@@ -141,14 +131,14 @@ chmod +x main_ml.py
 
 ![models-command](https://github.com/jackonedev/challenge_edmachina/blob/main/.gif/ml_help-2-ok.gif?raw=true)
 
-#### .7.     **HOW TO ACCESS MLflow UI**
+#### .6.     **HOW TO ACCESS MLflow UI**
 
 - For metrics you can access the MLflow UI by running the following command
 ```bash
 mlflow ui
 ```
 
-#### .8.     **METRICS**
+#### .7.     **METRICS**
 
 - The metrics of the **Linear Regression** models with 'k' features using `sklearn` `SelectKBest`. The models are LinearRegression, Lasso, and ElasticNet.
 
@@ -193,3 +183,29 @@ mlflow ui
 |  0 | XGBRegressor          |        0.366    |         0.575    |
 
 **Hyperparameters:** {"objective": "reg:squarederror", "n_estimators": 1000, "learning_rate": 0.1, "max_depth": 3, "callbacks": [early_stop]}
+
+
+
+#### .8.     **LAST UPDATES**
+
+
+**DS MAIN PIPELINE VERSIONING** (August 13)
+
+Add the `next_attempt.sh` bash file for the `new_attempt` step in the Makefile.
+
+The step aims to store the scripts and artifacts related to the current state of the DS Main Pipeline. In this way, it is possible to guarantee the reproducibility of the results, based on older versions of the code, regarding the Data Science workflow phases.
+
+Executing `make new_attempt` will create a folder inside the `ds_versions/` directory, and the folder's name will contain the date and the attempt number, and in it, it will contain a copy of the folders: `ds_pipe`, `features`, and `reports`.
+
+
+
+**OPTIMIZATION** (August 2)
+
+The `multiprocessing` library was implemented within the script `tools/optimizer.py`, creating two functions within the script `data_preprocessing_mp.py` that are executed in parallel within the function called `data_preprocessing_mp`.
+
+- The original step 2 takes 7.7 seconds
+- The optimized step 2 takes 4.99 seconds
+- The original main pipeline takes 10.75 seconds
+- The main pipeline with the optimized step takes 8 seconds
+- The performance improvement in step 2 is 35.2%
+- The performance improvement in the main pipeline is 25.6%
