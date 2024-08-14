@@ -104,7 +104,7 @@ chmod +x main_ds.py
 
 
 
-#### .5.     **HOW TO RUN ML MAIN APP**
+#### .5.     **HOW TO RUN ML TRAIN PIPELINE**
 
 - Conceed administrative permissions to the main script (once)
 ```bash
