@@ -138,51 +138,45 @@ chmod +x main_ml.py
 mlflow ui
 ```
 
-#### .7.     **METRICS**
+#### .7.     **METRICS**     *(Updated)*
 
 - The metrics of the **Linear Regression** models with 'k' features using `sklearn` `SelectKBest`. The models are LinearRegression, Lasso, and ElasticNet.
 
 |    |   k |   train_score_elastic_net |   train_score_lasso |   train_score_lin_reg |   test_score_elastic_net |   test_score_lasso |   test_score_lin_reg |
 |---:|----:|--------------------------:|--------------------:|----------------------:|-------------------------:|-------------------:|---------------------:|
 |  0 |  34 |                    0.2296 |              0.2846 |                0.296  |                   0.244  |             0.2905 |               0.2959 |
-|  1 |  29 |                    0.1911 |              0.2207 |                0.2292 |                   0.197  |             0.2212 |               0.2232 |
-|  2 |  25 |                    0.1497 |              0.1527 |                0.1552 |                   0.1746 |             0.1816 |               0.1901 |
-|  3 |  23 |                    0.1375 |              0.139  |                0.1403 |                   0.1655 |             0.1702 |               0.1774 |
-|  4 |  17 |                    0.1251 |              0.1267 |                0.1279 |                   0.1518 |             0.1553 |               0.1617 |
-|  5 |  11 |                    0.0668 |              0.067  |                0.0674 |                   0.0891 |             0.0895 |               0.0934 |
-|  6 |   5 |                    0.0452 |              0.0454 |                0.0455 |                   0.0587 |             0.059  |               0.0608 |
-|  7 |   2 |                    0.0065 |              0.0065 |                0.0065 |                   0.0115 |             0.0114 |               0.012  |
+|  1 |  29 |                    0.2114 |              0.2499 |                0.259  |                   0.2303 |             0.2625 |               0.2673 |
+|  2 |  25 |                    0.1706 |              0.1881 |                0.1945 |                   0.1786 |             0.1918 |               0.1944 |
+|  3 |  23 |                    0.1457 |              0.148  |                0.1501 |                   0.1665 |             0.1726 |               0.1776 |
+|  4 |  17 |                    0.1261 |              0.1278 |                0.1291 |                   0.1495 |             0.1549 |               0.1613 |
+|  5 |  11 |                    0.1061 |              0.1071 |                0.1077 |                   0.1274 |             0.1292 |               0.1328 |
+|  6 |   5 |                    0.0461 |              0.0463 |                0.0464 |                   0.0612 |             0.0616 |               0.0636 |
+|  7 |   2 |                    0.006  |              0.0059 |                0.006  |                   0.0063 |             0.0064 |               0.0062 |
 
 
 <br/><br/>
 
 - The metrics of the **Random Forest** model.
 
-|    | model_type            |   test_r2_score |   train_r2_score |
-|---:|:----------------------|----------------:|-----------------:|
-|  0 | RandomForestRegressor |        0.223173 |         0.701494 |
-
-**Hyperparameters:** {'n_estimators': 100, 'max_depth': 10, 'random_state': 42}
+|    | hyperparameters                                            | model_type            |   random_state |   mean_cv_r2_score |   std_cv_r2_score |   test_r2_score |   train_r2_score |
+|---:|:-----------------------------------------------------------|:----------------------|---------------:|-------------------:|------------------:|----------------:|-----------------:|
+|  0 | {'n_estimators': 100, 'max_depth': 10, 'random_state': 42} | RandomForestRegressor |             42 |           0.218779 |         0.0377207 |        0.255235 |         0.891187 |
 
 <br/><br/>
 
 - The metrics of the models using **cross validation** with 5 folds.
 
-|    | model_type             |   mean_cv_r2_score |   std_cv_r2_score |   test_r2_score |   train_r2_score |
-|---:|:-----------------------|-------------------:|------------------:|----------------:|-----------------:|
-|  0 | RandomForestClassifier |         -0.03      |         0.055     |        0.258    |                1 |
-
-**Hyperparameters:** {'n_estimators': 100, 'max_depth': 10, 'random_state': 42}
+|    | hyperparameters                                            | model_type            |   random_state |   mean_cv_r2_score |   std_cv_r2_score |   test_r2_score |   train_r2_score |
+|---:|:-----------------------------------------------------------|:----------------------|---------------:|-------------------:|------------------:|----------------:|-----------------:|
+|  0 | {'n_estimators': 100, 'max_depth': 10, 'random_state': 42} | RandomForestRegressor |             42 |           0.218779 |         0.0377207 |        0.255235 |         0.891187 |
 
 <br/><br/>
 
 - The metrics of the **XGBoost** model.
 
-|    | model_type            |   test_r2_score |   train_r2_score |
-|---:|:----------------------|----------------:|-----------------:|
-|  0 | XGBRegressor          |        0.366    |         0.575    |
-
-**Hyperparameters:** {"objective": "reg:squarederror", "n_estimators": 1000, "learning_rate": 0.1, "max_depth": 3, "callbacks": [early_stop]}
+|    | hyperparameters                                                                                                             | model_type   | scaler         |   test_r2_score |   train_r2_score |
+|---:|:----------------------------------------------------------------------------------------------------------------------------|:-------------|:---------------|----------------:|-----------------:|
+|  0 | {'objective': 'reg:squarederror', 'n_estimators': 1000, 'learning_rate': 0.1, 'max_depth': 3, 'callbacks': [EarlyStopping]} | XGBRegressor | StandardScaler |        0.365994 |         0.574565 |
 
 
 
