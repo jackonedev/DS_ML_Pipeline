@@ -20,6 +20,7 @@ from sklearn.linear_model import ElasticNet, Lasso, LinearRegression, LogisticRe
 from sklearn.metrics import r2_score
 from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import ExtraTreesRegressor
 
 from tools.ml import load_data, preprocess_data
 from tools.serializers import custom_serializer
@@ -30,7 +31,7 @@ TEST_SIZE = 0.15
 SCALER = StandardScaler
 MIN_K = 1
 SCORE_FUNC = mutual_info_regression
-CV = 5
+CV = 3
 NOW = str(int(time.time()))
 
 
@@ -45,7 +46,7 @@ def feature_selection(X_train, y_train, k=10):
 
 
 def train_model(X_train, y_train):
-    model = Lasso(alpha=0.1)
+    model = Lasso(alpha=0.1, random_state=RANDOM_STATE)
     model.fit(X_train, y_train)
     return model
 
@@ -79,13 +80,13 @@ def main_feature_selector(dataset_name: str, feature_name: str) -> None:
     df = df.iloc[:, :-1]
 
     # .3. Recursive Feature Elimination with correlated features
-    clf = LogisticRegression()
-    cv = StratifiedKFold(CV)
+    estimator = ExtraTreesRegressor(random_state=RANDOM_STATE)
+    cv = StratifiedKFold(CV, random_state=RANDOM_STATE)
     rfecv = RFECV(
-        estimator=clf,
+        estimator=estimator,
         step=1,
         cv=cv,
-        scoring="accuracy",
+        scoring="r2",
         min_features_to_select=MIN_K,
         n_jobs=-1,
     )
@@ -184,7 +185,7 @@ def main_feature_selector(dataset_name: str, feature_name: str) -> None:
             log_metric("test_score_lin_reg", test_score_lin_reg)
             print("train_r2_score_lin_reg: ", train_score_lin_reg)
             print("test_r2_score_lin_reg: ", test_score_lin_reg)
-            elastic_net = ElasticNet(alpha=0.1)
+            elastic_net = ElasticNet(alpha=0.1, random_state=RANDOM_STATE)
             elastic_net.fit(X_train_selected, y_train)
             train_score_elastic_net = elastic_net.score(X_train_selected, y_train)
             test_score_elastic_net = elastic_net.score(X_test_selected, y_test)
