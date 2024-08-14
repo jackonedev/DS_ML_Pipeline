@@ -158,20 +158,20 @@ mlflow ui
 
 - The metrics of the **Random Forest** model.
 
-|    | hyperparameters                                           | model_type            |   random_state |   test_r2_score |   train_r2_score |
-|---:|:----------------------------------------------------------|:----------------------|---------------:|----------------:|-----------------:|
-|  0 | {'n_estimators': 100, 'max_depth': 6, 'random_state': 42} | RandomForestRegressor |             42 |        0.157031 |         0.370046 |
+|    | hyperparameters                                           | model_type            |   test_r2_score |   train_r2_score |
+|---:|:----------------------------------------------------------|:----------------------|----------------:|-----------------:|
+|  0 | {'n_estimators': 100, 'max_depth': 6, 'random_state': 42} | RandomForestRegressor |        0.157031 |         0.370046 |
 
 <br/><br/>
 
 - The metrics of the models using **cross validation** with 5 folds.
 
-|    | hyperparameters                                            | model_type            |   random_state |   mean_cv_r2_score |   std_cv_r2_score |   test_r2_score |   train_r2_score |
-|---:|:-----------------------------------------------------------|:----------------------|---------------:|-------------------:|------------------:|----------------:|-----------------:|
-|  0 | {'alpha': 0.1}                                             | ElasticNet            |             42 |           0.205899 |         0.0199696 |        0.243999 |         0.229647 |
-|  1 | {'alpha': 0.1}                                             | Lasso                 |             42 |           0.260118 |         0.0331183 |        0.290455 |         0.284614 |
-|  2 | {}                                                         | LinearRegression      |             42 |           0.270514 |         0.0430275 |        0.295887 |         0.295995 |
-|  3 | {'n_estimators': 100, 'max_depth': 10, 'random_state': 42} | RandomForestRegressor |             42 |           0.204007 |         0.0363636 |        0.223173 |         0.701494 |
+|    | hyperparameters                                            | model_type            |   mean_cv_r2_score |   std_cv_r2_score |   test_r2_score |   train_r2_score |
+|---:|:-----------------------------------------------------------|:----------------------|-------------------:|------------------:|----------------:|-----------------:|
+|  0 | {'alpha': 0.1}                                             | ElasticNet            |           0.205899 |         0.0199696 |        0.243999 |         0.229647 |
+|  1 | {'alpha': 0.1}                                             | Lasso                 |           0.260118 |         0.0331183 |        0.290455 |         0.284614 |
+|  2 | {}                                                         | LinearRegression      |           0.270514 |         0.0430275 |        0.295887 |         0.295995 |
+|  3 | {'n_estimators': 100, 'max_depth': 10, 'random_state': 42} | RandomForestRegressor |           0.204007 |         0.0363636 |        0.223173 |         0.701494 |
 
 <br/><br/>
 
