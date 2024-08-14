@@ -2,10 +2,8 @@ import os
 import time
 
 import mlflow
-import numpy as np
 import xgboost as xgb
 from mlflow import log_metric, log_param
-from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.preprocessing import StandardScaler
 
