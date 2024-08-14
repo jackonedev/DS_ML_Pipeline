@@ -22,7 +22,9 @@ from tools.dates import round_timedelta
 from utils.config import PARQUET_PATH
 
 
-def data_preprocessing(parquet_name: Union[str, None] = None) -> None:
+def data_preprocessing(
+    parquet_name: Union[str, None] = None, ass_name_threshold_value: int = 15
+) -> None:
     """
     DATA PREPROCESSING STEP
     EXECUTION PROCESSES:
@@ -212,7 +214,7 @@ def data_preprocessing(parquet_name: Union[str, None] = None) -> None:
             other_ass_name := ass_name_label.value_counts()[
                 (
                     ass_name_threshold := (
-                        ass_name_label.value_counts() < 15
+                        ass_name_label.value_counts() < ass_name_threshold_value
                     ).values.tolist()
                 )
             ].index
