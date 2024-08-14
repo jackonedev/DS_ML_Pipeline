@@ -80,8 +80,9 @@ def main_feature_selector(dataset_name: str, feature_name: str) -> None:
     df = df.iloc[:, :-1]
 
     # .3. Recursive Feature Elimination with correlated features
-    estimator = ExtraTreesRegressor(random_state=RANDOM_STATE)
-    cv = StratifiedKFold(CV, random_state=RANDOM_STATE)
+    estimator = ExtraTreesRegressor(random_state=RANDOM_STATE, n_jobs=-1)
+    # estimator = ElasticNet(alpha=0.1, random_state=RANDOM_STATE)
+    cv = StratifiedKFold(CV, random_state=RANDOM_STATE, shuffle=True)
     rfecv = RFECV(
         estimator=estimator,
         step=1,
