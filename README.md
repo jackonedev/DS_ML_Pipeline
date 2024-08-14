@@ -158,9 +158,9 @@ mlflow ui
 
 - The metrics of the **Random Forest** model.
 
-|    | hyperparameters                                            | model_type            |   random_state |   mean_cv_r2_score |   std_cv_r2_score |   test_r2_score |   train_r2_score |
-|---:|:-----------------------------------------------------------|:----------------------|---------------:|-------------------:|------------------:|----------------:|-----------------:|
-|  0 | {'n_estimators': 100, 'max_depth': 10, 'random_state': 42} | RandomForestRegressor |             42 |           0.218779 |         0.0377207 |        0.255235 |         0.891187 |
+|    | hyperparameters                                           | model_type            |   random_state |   test_r2_score |   train_r2_score |
+|---:|:----------------------------------------------------------|:----------------------|---------------:|----------------:|-----------------:|
+|  0 | {'n_estimators': 100, 'max_depth': 6, 'random_state': 42} | RandomForestRegressor |             42 |        0.157031 |         0.370046 |
 
 <br/><br/>
 
