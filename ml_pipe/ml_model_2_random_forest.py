@@ -21,7 +21,9 @@ HYPERPARAMETERS = {
 }
 
 
-def main_random_forest(dataset_name: str, feature_name: str) -> None:
+def main_random_forest(
+    dataset_name: str, feature_name: str, select_best_features: bool = True
+) -> None:
     print("  ML model_2: Random Forest Started!  ".center(88, "."), end="\n\n")
 
     # .1. Inicia un nuevo experimento
@@ -34,10 +36,18 @@ def main_random_forest(dataset_name: str, feature_name: str) -> None:
 
     # .2. Cargar feature-dataset y feature-variables
     df = load_data(dataset_name, feature_name)
-    features = obtain_model_1_features()
+    if select_best_features:
+        try:
+            features = obtain_model_1_features()
+            features += ["target"]
+        except Exception as e:
+            print("Error:", e, end="\n\n")
+            features = df.columns.tolist()
+    else:
+        features = df.columns.tolist()
 
     # .3. Construir feature-entrenamiento
-    df = df[features + ["target"]]
+    df = df[features]
     X_train, X_test, y_train, y_test = preprocess_data(
         df, TEST_SIZE, RANDOM_STATE, SCALER
     )
@@ -54,6 +64,7 @@ def main_random_forest(dataset_name: str, feature_name: str) -> None:
         log_param("hyperparameters", HYPERPARAMETERS)
         log_metric("train_r2_score", train_r2_score)
         log_metric("test_r2_score", test_r2_score)
+        log_metric("random_state", RANDOM_STATE)
         print("train_r2_score: ", train_r2_score)
         print("test_r2_score: ", test_r2_score)
 
