@@ -4,6 +4,7 @@ import time
 import mlflow
 from mlflow import log_metric, log_param
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.linear_model import LinearRegression, Lasso, ElasticNet
 from sklearn.metrics import make_scorer, r2_score
 from sklearn.model_selection import KFold, cross_val_score
 from sklearn.preprocessing import StandardScaler
@@ -16,12 +17,8 @@ TEST_SIZE = 0.15
 SCALER = StandardScaler
 CV = 5
 NOW = str(int(time.time()))
-MODEL = RandomForestRegressor
-HYPERPARAMETERS = {
-    "n_estimators": 100,
-    "max_depth": 10,
-    "random_state": RANDOM_STATE,
-}
+MODEL = ElasticNet
+HYPERPARAMETERS = {"alpha": 0.1}
 
 
 def main_cross_validation(
@@ -58,7 +55,7 @@ def main_cross_validation(
     # .4. Entrenar el modelo
     with mlflow.start_run():
         log_param("model_type", MODEL.__name__)
-        model = train_model(X_train, y_train, MODEL)
+        model = train_model(X_train, y_train, MODEL, **HYPERPARAMETERS)
 
         # .5. Realizar validación cruzada
         cv = KFold(n_splits=CV, shuffle=True, random_state=RANDOM_STATE)
