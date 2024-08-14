@@ -168,7 +168,10 @@ mlflow ui
 
 |    | hyperparameters                                            | model_type            |   random_state |   mean_cv_r2_score |   std_cv_r2_score |   test_r2_score |   train_r2_score |
 |---:|:-----------------------------------------------------------|:----------------------|---------------:|-------------------:|------------------:|----------------:|-----------------:|
-|  0 | {'n_estimators': 100, 'max_depth': 10, 'random_state': 42} | RandomForestRegressor |             42 |           0.218779 |         0.0377207 |        0.255235 |         0.891187 |
+|  0 | {'alpha': 0.1}                                             | ElasticNet            |             42 |           0.205899 |         0.0199696 |        0.243999 |         0.229647 |
+|  1 | {'alpha': 0.1}                                             | Lasso                 |             42 |           0.260118 |         0.0331183 |        0.290455 |         0.284614 |
+|  2 | {}                                                         | LinearRegression      |             42 |           0.270514 |         0.0430275 |        0.295887 |         0.295995 |
+|  3 | {'n_estimators': 100, 'max_depth': 10, 'random_state': 42} | RandomForestRegressor |             42 |           0.204007 |         0.0363636 |        0.223173 |         0.701494 |
 
 <br/><br/>
 
