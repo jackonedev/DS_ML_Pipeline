@@ -1,3 +1,4 @@
+# ml_model_2_random_forest.py
 import os
 import time
 
@@ -20,6 +21,7 @@ HYPERPARAMETERS = {
     "random_state": RANDOM_STATE,
 }
 TRACKING_ID = 2
+EXPERIMENT_ID = 5
 
 
 def main_random_forest(
@@ -39,8 +41,12 @@ def main_random_forest(
     df = load_data(dataset_name, feature_name)
     if select_best_features:
         try:
-            features = obtain_model_1_features()
+            features = obtain_model_1_features(experiment_id=EXPERIMENT_ID)
             features += ["target"]
+        except KeyError as e:
+            print("Error:", e, end="\n\n")
+            print ("Verify if EXPERIMENT_ID is the correct one on mlflow UI")
+            raise e
         except Exception as e:
             print("Error:", e, end="\n\n")
             features = df.columns.tolist()

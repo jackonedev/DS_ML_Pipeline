@@ -39,8 +39,17 @@ def train_model(X_train, y_train, model, **kwargs):
     return model
 
 
-def obtain_model_1_features() -> List[str]:
-    experiments = mlflow.search_runs(experiment_ids=["1"], search_all_experiments=True)
+def obtain_model_1_features(experiment_id: int) -> List[str]:
+    """Obtiene las características seleccionadas por el modelo_1
+
+    Args:
+        experiment_id (int): Id correspondiente a la interface de mlflow
+
+    Returns:
+        List[str]: Lista de las mejores features obtenidas por el modelo_1
+    """
+    
+    experiments = mlflow.search_runs(experiment_ids=[str(experiment_id)], search_all_experiments=True)
     score_cols = ["metrics.train", "metrics.test"]
     cols_name = []
     for col in experiments.columns:
