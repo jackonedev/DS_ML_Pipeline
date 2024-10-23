@@ -5,6 +5,16 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+# This is the list of labels related to the 'course_name' column in the dataset
+# Leave empty if no filter is needed
+# The main ds pipeline and the main ml pipeline contains a 
+# 'course_name_filter' boolean parameter to activate this filter
+COURSE_NAMES = [
+    "Intuitive non-volatile ability",
+    "Object-based leadingedge help-desk"
+]
+
+
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATASETS_PATH = os.path.join(PROJECT_ROOT, "datasets")
 DATASET_NAME = "challenge_edMachina"

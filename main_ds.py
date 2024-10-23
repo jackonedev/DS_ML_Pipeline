@@ -10,12 +10,32 @@ from ds_pipe.data_preprocessing import data_preprocessing
 from ds_pipe.data_preprocessing_mp import data_preprocessing_mp
 from ds_pipe.data_research import main_research
 from ds_pipe.data_results import main_results
-from utils.config import DATASET_NAME
+from utils.config import DATASET_NAME, COURSE_NAMES
 
 warnings.filterwarnings("ignore")
 
 
-def main_ds(download_reports: bool = False) -> None:
+
+def main_ds(
+    download_reports: bool = False,
+    course_name_filter: bool = True
+) -> None:
+    """
+    Main function to execute the data science pipeline.
+    Args:
+        download_reports (bool): Flag to indicate whether to download reports. Defaults to False.
+        course_name_filter (bool): Flag to indicate whether to filter by course name. Defaults to True.
+    Returns:
+        None
+    Example:
+        main_ds(
+            download_reports=True,
+            course_name_filter=True
+        )
+    """
+    
+    
+    
     start = time.time()
 
     # STEP 1
@@ -32,11 +52,19 @@ def main_ds(download_reports: bool = False) -> None:
         print("Error:", e, end="\n\n")
         data_preprocessing(f"{DATASET_NAME}.parquet")
 
-    # STEP 3: Not Implemented
+    # STEP 3:
     main_research(DATASET_NAME, download_reports=download_reports)
 
     # STEP 4
-    main_results(f"{DATASET_NAME}_cleaned.parquet", download_reports=download_reports)
+    if course_name_filter:
+        course_name_filter = COURSE_NAMES
+    else:
+        course_name_filter = []
+    main_results(
+        f"{DATASET_NAME}_cleaned.parquet",
+        download_reports=download_reports,
+        course_name_filter=course_name_filter,
+    )
 
     # Execution Time
     current_time = (
