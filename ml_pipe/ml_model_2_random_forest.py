@@ -19,6 +19,7 @@ HYPERPARAMETERS = {
     "max_depth": 6,
     "random_state": RANDOM_STATE,
 }
+TRACKING_ID = 2
 
 
 def main_random_forest(
@@ -28,7 +29,7 @@ def main_random_forest(
 
     # .1. Inicia un nuevo experimento
     feature_name = f"{dataset_name}_{feature_name}"
-    experiment_name = f'Random Forest: "{feature_name}"'
+    experiment_name = f'{TRACKING_ID}_Random Forest: "{feature_name}"'
     model_registry_name = f"sk-learn-{MODEL.__name__}-model".lower()
     # pylint: disable=unused-variable
     model_artifact_path = os.path.join(ARTIFACTS_PATH, model_registry_name, NOW)

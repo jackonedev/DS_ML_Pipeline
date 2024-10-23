@@ -23,6 +23,7 @@ HYPERPARAMETERS = {
     "max_depth": 3,
     "callbacks": [early_stop],
 }
+TRACKING_ID = 2
 
 
 def main_xgboost(dataset_name: str, feature_name: str) -> None:
@@ -30,7 +31,7 @@ def main_xgboost(dataset_name: str, feature_name: str) -> None:
 
     # .1. Inicia un nuevo experimento
     feature_name = f"{dataset_name}_{feature_name}"
-    experiment_name = f'XGBoost: "{feature_name}"'
+    experiment_name = f'{TRACKING_ID}_XGBoost: "{feature_name}"'
     model_registry_name = f"xgboost-{MODEL.__name__}-model".lower()
     # pylint: disable=unused-variable
     model_artifact_path = os.path.join(ARTIFACTS_PATH, model_registry_name, NOW)
